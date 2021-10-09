@@ -32,5 +32,16 @@ body
 canvas{
     border: 1px 1px 1px solid white;
     border-radius: 10px;
-    margin-top: 50px;
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+
+.copy_right_footer
+{
+    position: fixed;
+    background: cornsilk;
+    bottom: 0;
+    width: 100%;
+    line-height: 3;
+    text-align: center;
 }
