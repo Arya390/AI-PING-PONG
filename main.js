@@ -1,6 +1,12 @@
 
 /*created by prashant shukla */
 
+rightWristX = 0;
+rightWristY = 0;
+rightWristscore = 0;
+
+
+
 var paddle2 =10,paddle1=10;
 
 var paddle1X = 10,paddle1Height = 110;
@@ -21,15 +27,17 @@ var ball = {
     dy:3
 }
 
+
 function setup(){
   canvas =  createCanvas(600,500);
   canvas.parent('canvas');
 
   video = createCapture(VIDEO);
   video.size(600,500);
-  video.hide;
+  video.parent('game_console');
 
   poseNet = ml5.poseNet(video, modelLoaded);
+  poseNet.on('pose', gotPoses);
 }
 
 function modelLoaded()
@@ -37,11 +45,31 @@ function modelLoaded()
   console.log('PoseNet Is Initialized');
 }
 
+function gotPoses(results)
+{
+  if(results.length > 0)
+  {
+    rightWristX = results[0].pose.rightWrist.x;
+    rightWristY = results[0].pose.rightWrist.x;
+    console.log("rightWristX = " + rightWristX + " rightWristY = " + rightWristY);
+    rightWristscore = results[0].pose.keypoints[10].score;
+  }
+}
+
 
 function draw(){
 
   image(video, 0, 0, 600, 500);
  background(0); 
+
+ if(rightWristscore > 0.2)
+ {
+  fill("#FF0000");
+  stroke("#FF0000");
+ 
+  circle(rightWristX, rightWristY,20);
+   
+ }
 
  fill("black");
  stroke("black");
